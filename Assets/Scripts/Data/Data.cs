@@ -9,9 +9,11 @@ namespace MVCExample
     {
         [SerializeField] private string _playerDataPath;
         [SerializeField] private string _enemyDataPath;
+        [SerializeField] private string _bulletDataPath;
         private PlayerData _player;
         private EnemyData _enemy;
-    
+        private BulletData _bullet;
+
 
         public PlayerData Player
         {
@@ -25,7 +27,7 @@ namespace MVCExample
                 return _player;
             }
         }
-    
+
 
         public EnemyData Enemy
         {
@@ -39,8 +41,21 @@ namespace MVCExample
                 return _enemy;
             }
         }
-        
-        
+
+        public BulletData Bullet
+        {
+            get
+            {
+                if (_bullet == null)
+                {
+                    _bullet = Load<BulletData>("Data/" + _bulletDataPath);
+                }
+
+                return _bullet;
+            }
+        }
+
+
         private T Load<T>(string resourcesPath) where T : Object =>
             Resources.Load<T>(Path.ChangeExtension(resourcesPath, null));
     }

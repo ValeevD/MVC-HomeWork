@@ -2,7 +2,7 @@
 
 namespace MVCExample
 {
-    public interface IMove
+    public interface IMoveToPoint
     {
         void Move(Vector3 point);
     }

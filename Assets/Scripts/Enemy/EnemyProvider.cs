@@ -1,13 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace MVCExample
 {
-    public sealed class EnemyProvider : MonoBehaviour, IEnemy
+    public sealed class EnemyProvider : MonoBehaviour, IEnemy, IDestructable
+
     {
         [SerializeField] private float _speed;
         [SerializeField] private float _stopDistance;
         private Rigidbody2D _rigidbody2D;
         private Transform _transform;
+
+        public CollisionType SelfCollisionType {get; set;}
+
+        public event Action<IDestructable, ICollision> CheckCollision = delegate(IDestructable des, ICollision col) {};
+
+        private void Awake()
+        {
+            SelfCollisionType = CollisionType.Enemy;
+        }
 
         private void Start()
         {
@@ -26,6 +37,11 @@ namespace MVCExample
             {
                 _rigidbody2D.velocity = Vector2.zero;
             }
+        }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
         }
     }
 }

@@ -11,11 +11,11 @@ namespace MVCExample
             _playerData = playerData;
         }
 
-        public Transform CreatePlayer()
+        public PlayerProvider CreatePlayer()
         {
-           return new GameObject("player").
-               AddSprite(_playerData.Sprite).
-               AddRigidbody2D(7).AddRigidbody2D(8).transform;
+           //return new GameObject("player").AddSprite(_playerData.Sprite).transform;
+
+           return Object.Instantiate(_playerData.playerPrefab);
         }
     }
 }

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerDataPath: UnitSettings
   _enemyDataPath: EnemySettings
+  _bulletDataPath: BulletData

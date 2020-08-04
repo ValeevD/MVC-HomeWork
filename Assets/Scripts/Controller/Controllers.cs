@@ -8,25 +8,37 @@ namespace MVCExample
         private readonly IExecute[] _executeControllers;
 
         public int Length => _executeControllers.Length;
-        
+
         public IExecute this[int index] => _executeControllers[index];
 
         public Controllers(Data data)
         {
             var pcInputHorizontal = new PCInputHorizontal();
             var pcInputVertical = new PCInputVertical();
-            
+            var pcInputFire = new PCFireInput();
+
             IPlayerFactory playerFactory = new PlayerFactory(data.Player);
             var player = playerFactory.CreatePlayer();
-           
+            var playerTransform = player.transform;
+            //var playerProvider = player.GetComponent<PlayerProvider>();
+
+            IBulletFactory bulletFactory = new BulletFactory(data.Bullet);
+
             IEnemyFactory enemyFactory = new EnemyFactory();
             CompositeMove enemy = new CompositeMove();
+
             enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));
-            
+            enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));
+            enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));
+            enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));
+            enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));
+
             var executes = new List<IExecute>();
-            executes.Add(new InputController(pcInputHorizontal, pcInputVertical));
+            executes.Add(new InputController(pcInputHorizontal, pcInputVertical, pcInputFire));
             executes.Add(new MoveController(pcInputHorizontal, pcInputVertical, player, data.Player));
-            executes.Add(new EnemyMoveController(enemy, player));
+            executes.Add(new EnemyMoveController(enemy, playerTransform));
+            executes.Add(new FireController(player, pcInputFire, data.Bullet, bulletFactory));
+
             _executeControllers = executes.ToArray();
         }
 

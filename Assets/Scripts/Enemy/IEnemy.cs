@@ -1,7 +1,7 @@
 ﻿namespace MVCExample
 {
-    public interface IEnemy : IMove
+    public interface IEnemy : IMoveToPoint
     {
-        
+
     }
 }
