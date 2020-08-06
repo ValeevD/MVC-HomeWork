@@ -5,18 +5,21 @@ using UnityEngine;
 
 namespace MVCExample
 {
-    public class PlayerProvider : MonoBehaviour, IDirected, IDestructable
+    public class PlayerProvider : MonoBehaviour, IDestructable, IPlayer
     {
         public CollisionType SelfCollisionType {get;set;}
         public event Action<IDestructable, ICollision> CheckCollision = delegate(IDestructable des, ICollision col) {};
 
         private Transform _transform;
+        private Vector2 _speed;
         private Vector2 _direction;
+        private Rigidbody2D _rigidBody;
 
         private void Awake()
         {
             _transform = transform;
-            _direction = new Vector2(0, 1);
+            _speed = new Vector2(0, 0);
+            _rigidBody = GetComponent<Rigidbody2D>();
             SelfCollisionType = CollisionType.Player;
         }
 
@@ -30,14 +33,31 @@ namespace MVCExample
             return _transform;
         }
 
-        public void SetDirection(Vector2 newDirection)
-        {
-            _direction = newDirection;
-        }
-
         public void Destroy()
         {
             Destroy(gameObject);
+        }
+
+        public void Move(float deltaTime)
+        {
+            _rigidBody.velocity = _speed;
+            SetDirection(_speed.normalized);
+            //var speed = deltaTime * _unitData.Speed;
+            //_move.Set(_horizontal * speed, _vertical * speed, 0.0f);
+            //_unit.localPosition += _move;
+        }
+
+        public void SetSpeed(Vector2 speed)
+        {
+            _speed = speed;
+        }
+
+        public void SetDirection(Vector2 newDirection)
+        {
+            if (newDirection != Vector2.zero)
+            {
+                _direction = newDirection;
+            }
         }
     }
 }

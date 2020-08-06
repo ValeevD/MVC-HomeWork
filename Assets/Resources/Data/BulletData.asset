@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BulletData
   m_EditorClassIdentifier: 
   _speed: 10
-  _reloadTime: 0
+  _lifeTime: 1
+  _reloadTime: 0.1
   bulletPrefab: {fileID: 935457146575420907, guid: 490056d7224d0024a8b6817910b93b5d,
     type: 3}

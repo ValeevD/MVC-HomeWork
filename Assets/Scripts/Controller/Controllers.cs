@@ -18,8 +18,8 @@ namespace MVCExample
             var pcInputFire = new PCFireInput();
 
             IPlayerFactory playerFactory = new PlayerFactory(data.Player);
-            var player = playerFactory.CreatePlayer();
-            var playerTransform = player.transform;
+            IPlayer player = playerFactory.CreatePlayer();
+            //Transform playerTransform = player.transform;
             //var playerProvider = player.GetComponent<PlayerProvider>();
 
             IBulletFactory bulletFactory = new BulletFactory(data.Bullet);
@@ -36,7 +36,7 @@ namespace MVCExample
             var executes = new List<IExecute>();
             executes.Add(new InputController(pcInputHorizontal, pcInputVertical, pcInputFire));
             executes.Add(new MoveController(pcInputHorizontal, pcInputVertical, player, data.Player));
-            executes.Add(new EnemyMoveController(enemy, playerTransform));
+            executes.Add(new EnemyMoveController(enemy, player.GetPosition()));
             executes.Add(new FireController(player, pcInputFire, data.Bullet, bulletFactory));
 
             _executeControllers = executes.ToArray();

@@ -6,14 +6,14 @@ namespace MVCExample
     {
         private readonly Transform _unit;
         private readonly IUnit _unitData;
-        private IDirected _player;
+        private IPlayer _player;
         private float _horizontal;
         private float _vertical;
         private Vector3 _move;
         private IUserInputProxy _horizontalInputProxy;
         private IUserInputProxy _verticalInputProxy;
 
-        public MoveController(IUserInputProxy horizontal, IUserInputProxy vertical, IDirected unit, IUnit unitData)
+        public MoveController(IUserInputProxy horizontal, IUserInputProxy vertical, IPlayer unit, IUnit unitData)
         {
             _player = unit;
             _unit = unit.GetPosition();
@@ -38,14 +38,15 @@ namespace MVCExample
 
         public void Execute(float deltaTime)
         {
-            var speed = deltaTime * _unitData.Speed;
+            var speed = _unitData.Speed;
             _move.Set(_horizontal * speed, _vertical * speed, 0.0f);
-            _unit.localPosition += _move;
 
-            if(_move != Vector3.zero)
-            {
-                _player.SetDirection(_move.normalized);
-            }
+            _player.SetSpeed(_move);
+            _player.Move(deltaTime);
+            // if(_move != Vector3.zero)
+            // {
+            //     _player.SetDirection(_move.normalized);
+            // }
         }
 
         public void Cleanup()
