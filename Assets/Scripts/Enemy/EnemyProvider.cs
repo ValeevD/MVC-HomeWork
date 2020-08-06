@@ -56,6 +56,5 @@ namespace MVCExample
         {
             CheckCollision.Invoke(this, other.gameObject.GetComponent<ICollision>());
         }
-
     }
 }

@@ -19,8 +19,6 @@ namespace MVCExample
 
             IPlayerFactory playerFactory = new PlayerFactory(data.Player);
             IPlayer player = playerFactory.CreatePlayer();
-            //Transform playerTransform = player.transform;
-            //var playerProvider = player.GetComponent<PlayerProvider>();
 
             IBulletFactory bulletFactory = new BulletFactory(data.Bullet);
 

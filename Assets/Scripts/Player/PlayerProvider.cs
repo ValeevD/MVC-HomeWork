@@ -67,7 +67,6 @@ namespace MVCExample
         private void OnTriggerEnter2D(Collider2D other)
         {
             CheckCollision.Invoke(this, other.GetComponent<ICollision>());
-            //ICollision col = other.GetComponent<EnemyProvider>();
         }
 
 
