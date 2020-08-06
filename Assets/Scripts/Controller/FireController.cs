@@ -17,8 +17,11 @@ namespace MVCExample
 
         private PlayerBullets _playerBullets;
 
+        public bool CanExecute {get;set;}
+
         public FireController(IDirected player, IUserFireInputProxy fireInput, BulletData data, IBulletFactory bulletFactory)
         {
+            CanExecute = true;
             _player = player;
             _fireInput = fireInput;
             _playerTransform = player.GetPosition();
@@ -33,6 +36,12 @@ namespace MVCExample
 
         public void Execute(float deltaTime)
         {
+            if(_playerTransform == null)
+            {
+                CanExecute = false;
+                return;
+            }
+
             if(_fire && _currentCooldown == 0)
             {
                 _playerBullets.AddBullet(_bulletFactory.CreateBullet(_playerTransform, _player.GetDirection()));

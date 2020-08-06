@@ -39,6 +39,18 @@ namespace MVCExample
             executes.Add(new EnemyMoveController(enemy, player.GetPosition()));
             executes.Add(new FireController(player, pcInputFire, data.Bullet, bulletFactory));
 
+            var enemiesList = enemy.GetEnemiesList();
+            List<IDestructable> destructables = new List<IDestructable>();
+
+            foreach(var _enemy in enemiesList)
+            {
+                destructables.Add((IDestructable)_enemy);
+            }
+
+            destructables.Add((IDestructable)player);
+
+            CollisionController collisionController = new CollisionController(destructables);
+
             _executeControllers = executes.ToArray();
         }
 

@@ -2,12 +2,16 @@
 {
     public sealed class InputController : IExecute
     {
+        public bool CanExecute {get;set;}
+
         private readonly IUserInputProxy _horizontal;
         private readonly IUserInputProxy _vertical;
         private readonly IUserFireInputProxy _fire;
 
+
         public InputController(IUserInputProxy horizontal, IUserInputProxy vertical, IUserFireInputProxy fire)
         {
+            CanExecute = true;
             _horizontal = horizontal;
             _vertical = vertical;
             _fire = fire;

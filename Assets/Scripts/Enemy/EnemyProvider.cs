@@ -13,10 +13,16 @@ namespace MVCExample
 
         public CollisionType SelfCollisionType {get; set;}
 
-        public event Action<IDestructable, ICollision> CheckCollision = delegate(IDestructable des, ICollision col) {};
+        public bool IsDead{get;set;}
+
+        public bool CanMove {get;set;}
+
+        public event Action<IDestructable, ICollision> CheckCollision;
 
         private void Awake()
         {
+            IsDead = false;
+            CanMove = true;
             SelfCollisionType = CollisionType.Enemy;
         }
 
@@ -41,7 +47,15 @@ namespace MVCExample
 
         public void Destroy()
         {
+            IsDead = true;
+            CanMove = false;
             Destroy(gameObject);
         }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            CheckCollision.Invoke(this, other.gameObject.GetComponent<ICollision>());
+        }
+
     }
 }

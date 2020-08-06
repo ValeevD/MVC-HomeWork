@@ -2,16 +2,19 @@ using System.Collections.Generic;
 
 namespace MVCExample
 {
-    public sealed class PlayerBullets : IMove
+    public sealed class PlayerBullets : IMove, ICollision
     {
 
         private List<IProjectile> _projectiles;
         private List<IProjectile> _deadProjectiles;
 
+        public CollisionType SelfCollisionType {get;set;}
+
         public PlayerBullets()
         {
             _projectiles = new List<IProjectile>();
             _deadProjectiles = new List<IProjectile>();
+            SelfCollisionType = CollisionType.Projectile;
         }
 
         public void Move(float deltaTime)

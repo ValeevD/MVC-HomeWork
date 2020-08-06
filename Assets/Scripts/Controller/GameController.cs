@@ -18,7 +18,8 @@ namespace MVCExample
             var deltaTime = Time.deltaTime;
             for (var i = 0; i < _controllers.Length; i++)
             {
-                _controllers[i].Execute(deltaTime);
+                if(_controllers[i].CanExecute)
+                    _controllers[i].Execute(deltaTime);
             }
         }
     }

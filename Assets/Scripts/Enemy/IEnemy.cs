@@ -1,6 +1,6 @@
 ﻿namespace MVCExample
 {
-    public interface IEnemy : IMoveToPoint
+    public interface IEnemy : IMoveToPoint, IIsDead
     {
 
     }

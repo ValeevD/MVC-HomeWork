@@ -1,7 +1,7 @@
 namespace MVCExample
 {
-    public interface IProjectile : IMove, IDestroyObject
+    public interface IProjectile : IMove, IDestroyObject, IIsDead
     {
-        bool IsDead{get;}
+
     }
 }

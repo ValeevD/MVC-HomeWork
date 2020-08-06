@@ -8,7 +8,11 @@ namespace MVCExample
     public class PlayerProvider : MonoBehaviour, IDestructable, IPlayer
     {
         public CollisionType SelfCollisionType {get;set;}
-        public event Action<IDestructable, ICollision> CheckCollision = delegate(IDestructable des, ICollision col) {};
+
+        public bool IsDead{get;set;}
+
+        public event Action<IDestructable, ICollision> CheckCollision;
+        //public event Action<IDestructable, ICollision> CheckCollision;
 
         private Transform _transform;
         private Vector2 _speed;
@@ -17,6 +21,7 @@ namespace MVCExample
 
         private void Awake()
         {
+            IsDead = false;
             _transform = transform;
             _speed = new Vector2(0, 0);
             _rigidBody = GetComponent<Rigidbody2D>();
@@ -35,17 +40,10 @@ namespace MVCExample
 
         public void Destroy()
         {
+            IsDead = true;
             Destroy(gameObject);
         }
 
-        public void Move(float deltaTime)
-        {
-            _rigidBody.velocity = _speed;
-            SetDirection(_speed.normalized);
-            //var speed = deltaTime * _unitData.Speed;
-            //_move.Set(_horizontal * speed, _vertical * speed, 0.0f);
-            //_unit.localPosition += _move;
-        }
 
         public void SetSpeed(Vector2 speed)
         {
@@ -59,5 +57,19 @@ namespace MVCExample
                 _direction = newDirection;
             }
         }
+
+        public void Move(float deltaTime)
+        {
+            _rigidBody.velocity = _speed;
+            SetDirection(_speed.normalized);
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            CheckCollision.Invoke(this, other.GetComponent<ICollision>());
+            //ICollision col = other.GetComponent<EnemyProvider>();
+        }
+
+
     }
 }
