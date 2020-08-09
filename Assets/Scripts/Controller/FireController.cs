@@ -64,6 +64,7 @@ namespace MVCExample
         public void Cleanup()
         {
             _fireInput.FireOnEnable -= FireInput;
+            _playerBullets.Clear();
         }
     }
 }

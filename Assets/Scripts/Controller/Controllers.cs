@@ -25,17 +25,11 @@ namespace MVCExample
             IEnemyFactory enemyFactory = new EnemyFactory();
             CompositeMove enemy = new CompositeMove();
 
-            enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));
-            enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));
-            enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));
-            enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));
-            enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));
+            int enemiesNum = 10;
 
-            var executes = new List<IExecute>();
-            executes.Add(new InputController(pcInputHorizontal, pcInputVertical, pcInputFire));
-            executes.Add(new MoveController(pcInputHorizontal, pcInputVertical, player, data.Player));
-            executes.Add(new EnemyMoveController(enemy, player.GetPosition()));
-            executes.Add(new FireController(player, pcInputFire, data.Bullet, bulletFactory));
+            for(int i=0; i<enemiesNum; ++i)
+                enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));
+
 
             var enemiesList = enemy.GetEnemiesList();
             List<IDestructable> destructables = new List<IDestructable>();
@@ -44,10 +38,19 @@ namespace MVCExample
             {
                 destructables.Add((IDestructable)_enemy);
             }
-
             destructables.Add((IDestructable)player);
 
-            CollisionController collisionController = new CollisionController(destructables);
+
+            IUIFactory uIFactory = new UIFactory();
+            IUIInfo uI = uIFactory.CreateUI(data.UISettings);
+
+            var executes = new List<IExecute>();
+            executes.Add(new InputController(pcInputHorizontal, pcInputVertical, pcInputFire));
+            executes.Add(new MoveController(pcInputHorizontal, pcInputVertical, player, data.Player));
+            executes.Add(new EnemyMoveController(enemy, player.GetPosition()));
+            executes.Add(new FireController(player, pcInputFire, data.Bullet, bulletFactory));
+            executes.Add(new CollisionController(destructables));
+            executes.Add(new UIController(uI, player, enemiesList));
 
             _executeControllers = executes.ToArray();
         }
@@ -58,6 +61,11 @@ namespace MVCExample
 
         public void Cleanup()
         {
+            for (var i = 0; i < _executeControllers.Length; i++)
+            {
+                if(_executeControllers[i] is ICleanup)
+                    ((ICleanup)_executeControllers[i]).Cleanup();
+            }
         }
     }
 }

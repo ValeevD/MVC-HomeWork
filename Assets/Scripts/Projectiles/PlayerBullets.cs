@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace MVCExample
@@ -39,6 +40,12 @@ namespace MVCExample
         public void AddBullet(IProjectile projectile)
         {
             _projectiles.Add(projectile);
+        }
+
+        public void Clear()
+        {
+            _projectiles.Clear();
+            _deadProjectiles.Clear();
         }
     }
 }

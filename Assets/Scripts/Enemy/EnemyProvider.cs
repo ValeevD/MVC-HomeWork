@@ -23,13 +23,9 @@ namespace MVCExample
         {
             IsDead = false;
             CanMove = true;
-            SelfCollisionType = CollisionType.Enemy;
-        }
-
-        private void Start()
-        {
-            _rigidbody2D = GetComponent<Rigidbody2D>();
             _transform = transform;
+            SelfCollisionType = CollisionType.Enemy;
+            _rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
         public void Move(Vector3 point)

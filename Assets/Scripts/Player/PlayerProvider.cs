@@ -40,6 +40,9 @@ namespace MVCExample
 
         public void Destroy()
         {
+            if(this == null)
+                return;
+
             IsDead = true;
             Destroy(gameObject);
         }

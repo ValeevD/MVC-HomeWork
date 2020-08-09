@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MVCExample
 {
-    public sealed class CompositeMove : IMoveToPoint
+    public sealed class CompositeMove : IMoveToPoint, ICleanup
     {
         private List<IMoveToPoint> _moves = new List<IMoveToPoint>();
 
@@ -49,6 +49,11 @@ namespace MVCExample
         public List<IMoveToPoint> GetEnemiesList()
         {
             return _moves;
+        }
+
+        public void Cleanup()
+        {
+            _moves.Clear();
         }
     }
 }

@@ -3,10 +3,12 @@ using UnityEngine;
 
 namespace MVCExample
 {
-    public class CollisionController: ICleanup
+    public class CollisionController: IInitialization, ICleanup, IExecute
     {
         private List<IDestructable> _destructables;
         private Dictionary<CollisionType, CollisionType> _collisionClasses;
+
+        public bool CanExecute {get;set;}
 
         public CollisionController(List<IDestructable> destructables)
         {
@@ -15,15 +17,17 @@ namespace MVCExample
             _collisionClasses.Add(CollisionType.Player, CollisionType.Enemy);
             _collisionClasses.Add(CollisionType.Enemy, CollisionType.Projectile);
 
+            CanExecute = true;
+
             InitializeDistructables(destructables);
         }
 
 
         private void CheckCollision(IDestructable des, ICollision col)
         {
-            //Debug.Log("Collision!!");
             if(_collisionClasses[des.SelfCollisionType] == col.SelfCollisionType)
             {
+                des.CheckCollision -= CheckCollision;
                 des.Destroy();
                 _destructables.Remove(des);
 
@@ -46,7 +50,22 @@ namespace MVCExample
 
         public void Cleanup()
         {
+            foreach(var des in _destructables)
+            {
+                des.CheckCollision -= CheckCollision;
+                des.Destroy();
+            }
+
+            _destructables.Clear();
+            _collisionClasses.Clear();
         }
 
+        public void Initialization()
+        {
+        }
+
+        public void Execute(float deltaTime)
+        {
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace MVCExample
 {
-    public sealed class EnemyMoveController : IExecute
+    public sealed class EnemyMoveController : IExecute, ICleanup
     {
         private readonly IMoveToPoint _move;
         private readonly Transform _target;
@@ -25,6 +25,12 @@ namespace MVCExample
             }
 
             _move.Move(_target.localPosition);
+        }
+
+        public void Cleanup()
+        {
+            if(_move is ICleanup)
+                ((ICleanup)_move).Cleanup();
         }
     }
 }

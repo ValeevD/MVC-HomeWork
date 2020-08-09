@@ -54,8 +54,12 @@ namespace MVCExample
 
         public void Cleanup()
         {
+            //if(_player != null)
+                _player.Destroy();
+
             _horizontalInputProxy.AxisOnChange -= HorizontalOnAxisOnChange;
             _verticalInputProxy.AxisOnChange -= VerticalOnAxisOnChange;
+
         }
     }
 }

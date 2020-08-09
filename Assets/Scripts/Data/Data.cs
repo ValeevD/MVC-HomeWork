@@ -10,9 +10,11 @@ namespace MVCExample
         [SerializeField] private string _playerDataPath;
         [SerializeField] private string _enemyDataPath;
         [SerializeField] private string _bulletDataPath;
+        [SerializeField] private string _uiDataPath;
         private PlayerData _player;
         private EnemyData _enemy;
         private BulletData _bullet;
+        private UIData _ui;
 
 
         public PlayerData Player
@@ -52,6 +54,19 @@ namespace MVCExample
                 }
 
                 return _bullet;
+            }
+        }
+
+        public UIData UISettings
+        {
+            get
+            {
+                if (_ui == null)
+                {
+                    _ui = Load<UIData>("Data/" + _uiDataPath);
+                }
+
+                return _ui;
             }
         }
 

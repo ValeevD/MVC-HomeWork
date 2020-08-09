@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9ad77a179284ab280ca3b7de5c51601, type: 3}
-  m_Name: Data
+  m_Script: {fileID: 11500000, guid: 3a0f65c505b96784e91c3497ba078d3a, type: 3}
+  m_Name: UISettings
   m_EditorClassIdentifier: 
-  _playerDataPath: UnitSettings
-  _enemyDataPath: EnemySettings
-  _bulletDataPath: BulletData
-  _uiDataPath: UISettings
+  uIPrefab: {fileID: 1619049248009775626, guid: 05313c88f9692d740b99b905dcf0ad85,
+    type: 3}

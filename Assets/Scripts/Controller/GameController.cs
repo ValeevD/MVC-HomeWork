@@ -22,5 +22,17 @@ namespace MVCExample
                     _controllers[i].Execute(deltaTime);
             }
         }
+
+        public void RestartLevel()
+        {
+            _controllers.Cleanup();
+            Start();
+        }
+
+        public void ExitGame()
+        {
+            Debug.Log("EXIT GAME");
+            Application.Quit();
+        }
     }
 }

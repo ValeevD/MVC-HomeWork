@@ -1,6 +1,6 @@
 ﻿namespace MVCExample
 {
-    public sealed class InputController : IExecute
+    public sealed class InputController : IExecute, ICleanup
     {
         public bool CanExecute {get;set;}
 
@@ -22,6 +22,10 @@
             _horizontal.GetAxis();
             _vertical.GetAxis();
             _fire.GetFireInput();
+        }
+
+        public void Cleanup()
+        {
         }
     }
 }
