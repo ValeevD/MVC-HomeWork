@@ -50,6 +50,9 @@ namespace MVCExample
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            // Debug.Log(this);
+            // Debug.Log(other);
+            // Debug.Log(other.gameObject);
             CheckCollision.Invoke(this, other.gameObject.GetComponent<ICollision>());
         }
     }

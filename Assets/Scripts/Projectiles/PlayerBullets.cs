@@ -44,8 +44,10 @@ namespace MVCExample
 
         public void Clear()
         {
+            foreach(var bullet in _projectiles)
+                bullet.Destroy();
+
             _projectiles.Clear();
-            _deadProjectiles.Clear();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace MVCExample
             IEnemyFactory enemyFactory = new EnemyFactory();
             CompositeMove enemy = new CompositeMove();
 
-            int enemiesNum = 10;
+            int enemiesNum = 5;
 
             for(int i=0; i<enemiesNum; ++i)
                 enemy.AddUnit(enemyFactory.CreateEnemy(data.Enemy, EnemyType.Small));

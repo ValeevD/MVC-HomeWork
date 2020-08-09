@@ -24,6 +24,7 @@ namespace MVCExample
             IsDead = false;
             _transform = transform;
             _speed = new Vector2(0, 0);
+            _direction = new Vector2(0, 1);
             _rigidBody = GetComponent<Rigidbody2D>();
             SelfCollisionType = CollisionType.Player;
         }
